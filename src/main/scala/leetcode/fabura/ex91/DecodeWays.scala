@@ -14,14 +14,7 @@ object DecodeWays extends App {
       else {
         val char = s.charAt(idx)
         char match {
-          case '0' => {
-            if (idx == 0) 0
-            else {
-              val prevChar = s.charAt(idx - 1).toString.toInt
-              if (prevChar == 1 || prevChar == 2) inner(0, prev, idx - 1)
-              else 0
-            }
-          }
+          case '0' => inner(0, prev, idx - 1)
           case '1' => inner(prev + prevPrev, prev, idx - 1)
           case '2' if idx + 1 < s.length && s.charAt(idx + 1).toString.toInt <= 6 => inner(prev + prevPrev, prev, idx - 1)
           case _ => inner(prev, prev, idx - 1)
@@ -29,7 +22,6 @@ object DecodeWays extends App {
       }
     }
 
-    if (s.startsWith("0")) 0
-    else inner(1, 0, s.length - 1)
+    inner(1, 0, s.length - 1)
   }
 }
